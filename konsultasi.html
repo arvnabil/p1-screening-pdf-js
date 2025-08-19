@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Konsultasi</title>
+    <!-- Bootstrap 5 CDN -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg bg-white border-bottom px-3">
+      <div class="container">
+        <a class="navbar-brand d-flex align-items-center" href="#">
+          ❤️ Ruang Sejiwa
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="index.html">Beranda</a>
+            </li>
+            <li class="nav-item"><a class="nav-link" href="#">Edukasi</a></li>
+            <li class="nav-item">
+              <a class="nav-link" href="screening.html">Screening</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active fw-bold" href="konsultasi.html"
+                >Konsultasi</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="komunitas.html">Komunitas</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="penyedia.html">Penyedia</a>
+            </li>
+            <li class="nav-item"><a class="nav-link" href="#">SOS</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container py-5" id="konsultan-list-section">
+      <div class="row">
+        <div class="col-12">
+          <h1 class="fw-bold">Buat Janji Konsultasi</h1>
+          <p class="text-muted">
+            Temukan profesional yang sesuai kebutuhanmu. Pilih fokus, format
+            sesi, dan jadwal yang cocok.
+          </p>
+          <!-- Search & Filters Card -->
+          <div class="card mb-3 rounded-3">
+            <div class="card-body">
+              <div
+                class="d-flex flex-column flex-lg-row justify-content-lg-between align-items-lg-center gap-3"
+              >
+                <div class="flex-grow-1">
+                  <input
+                    type="text"
+                    class="form-control rounded-3"
+                    placeholder="Cari: psikolog/psikiater/klinik..."
+                  />
+                </div>
+                <button
+                  type="button"
+                  class="px-5 btn btn-outline-primary active"
+                >
+                  Online
+                </button>
+                <button type="button" class="px-5 btn btn-outline-success">
+                  &lt; Rp 400K&gt;
+                </button>
+                <button type="button" class="px-5 btn btn-outline-info">
+                  Bahasa Indoensia
+                </button>
+                <button type="button" class="px-5 btn btn-outline-danger">
+                  Tesedia hari ini
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Provider Card -->
+          <div class="card mb-3 rounded-3">
+            <div
+              class="card-body d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center"
+            >
+              <div class="flex-grow-1">
+                <h5 class="fw-bold mb-1">dr. Mira, Sp.KJ</h5>
+                <p class="mb-1 text-muted">
+                  Psikiater • Fokus: stress kerja, kecemasan, tidur
+                </p>
+                <small class="text-muted"
+                  >Tarif: Rp. 250.000 / 45 menit • Online • 4.9⭐</small
+                >
+              </div>
+              <div
+                class="d-flex flex-column flex-md-row gap-2 mt-3 mt-sm-0 flex-shrink-0"
+              >
+                <button
+                  onclick="showConfirmationForm('dr. Mira, Sp.KJ', 250000, 45)"
+                  class="btn btn-first btn-sm rounded-3 px-4"
+                >
+                  Lihat Jadwal
+                </button>
+              </div>
+            </div>
+          </div>
+          <!-- Provider Card -->
+          <div class="card mb-3 rounded-3">
+            <div
+              class="card-body d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center"
+            >
+              <div class="flex-grow-1">
+                <h5 class="fw-bold mb-1">Raka, M.Psi, Psi</h5>
+                <p class="mb-1 text-muted">
+                  Psikolog Klinis • Fokus: burnout, manajemen, emosi
+                </p>
+                <small class="text-muted"
+                  >Tarif: Rp. 200.000 / 45 menit • Online • 4.8⭐</small
+                >
+              </div>
+              <div
+                class="d-flex flex-column flex-md-row gap-2 mt-3 mt-sm-0 flex-shrink-0"
+              >
+                <button
+                  onclick="showConfirmationForm('Raka, M.Psi, Psi', 200000, 45)"
+                  class="btn btn-first btn-sm rounded-3 px-4"
+                >
+                  Lihat Jadwal
+                </button>
+              </div>
+            </div>
+          </div>
+          <!-- Provider Card -->
+          <div class="card mb-3 rounded-3">
+            <div
+              class="card-body d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center"
+            >
+              <div class="flex-grow-1">
+                <h5 class="fw-bold mb-1">dr. Santi, Sp. Kj (K)</h5>
+                <p class="mb-1 text-muted">Psikiater • Fokus: mood & sleep</p>
+                <small class="text-muted"
+                  >Tarif: Rp. 400.000 / 45 menit • Online • 4.7⭐</small
+                >
+              </div>
+              <div
+                class="d-flex flex-column flex-md-row gap-2 mt-3 mt-sm-0 flex-shrink-0"
+              >
+                <button
+                  onclick="showConfirmationForm('dr. Santi, Sp. Kj (K)', 400000, 45)"
+                  class="btn btn-first btn-sm rounded-3 px-4"
+                >
+                  Lihat Jadwal
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Confirmation Section (Hidden by default) -->
+    <div class="container py-5" id="konfirmasi-section" style="display: none">
+      <div class="row">
+        <div class="d-flex justify-content-between align-items-center">
+          <h1 class="fw-bold">Konfirmasi Janji Konsultasi</h1>
+          <button
+            onclick="hideConfirmationForm()"
+            class="btn btn-sm btn-outline-secondary"
+          >
+            &larr; Kembali
+          </button>
+        </div>
+        <div class="col-lg-8 col-sm-12 mb-3 mt-3">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title fw-bold">Data & Tujuan Sesi</h5>
+              <form class="mt-3">
+                <div class="mb-3">
+                  <label for="fullName" class="form-label">Nama Lengkap</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="fullName"
+                    placeholder="Masukkan nama lengkap Anda"
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="email" class="form-label">Email</label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="email"
+                    placeholder="contoh@email.com"
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="whatsapp" class="form-label"
+                    >No. HP/Whatsapp</label
+                  >
+                  <input
+                    type="tel"
+                    class="form-control"
+                    id="whatsapp"
+                    placeholder="081234567890"
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="tujuan" class="form-label"
+                    >Tujuan Sesi (Opsional)</label
+                  >
+                  <textarea
+                    class="form-control"
+                    id="tujuan"
+                    rows="3"
+                    placeholder="Ceritakan singkat apa yang ingin Anda diskusikan"
+                  ></textarea>
+                </div>
+              </form>
+
+              <div class="alert alert-light mt-4" role="alert">
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    value=""
+                    id="termsCheck"
+                  />
+                  <label class="form-check-label small" for="termsCheck">
+                    Dengan ini saya menyetujui
+                    <strong>Kebijakan Privasi</strong> dan
+                    <strong>Tata tertib sesi</strong>. <br />
+                    Bukan untuk keadaan darurat. bila krisis hubungi 119 ext 8
+                    (gratis).
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Kolom untuk catatan & privasi -->
+        <div class="col-lg-4 col-sm-12 mb-3 mt-3">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title mb-3 fw-bold">Ringkasan Janji</h5>
+              <ul class="list-unstyled text-muted">
+                <li class="mb-2">
+                  <strong>Profesional:</strong>
+                  <span id="summary-profesional"></span>
+                </li>
+                <li class="mb-2"><strong>Metode:</strong> Online (Video)</li>
+                <li class="mb-2">
+                  <strong>Tanggal:</strong> Rabu, 12 - 19:00 WIB
+                </li>
+                <li class="mb-2">
+                  <strong>Durasi:</strong>
+                  <span id="summary-durasi"></span> Menit
+                </li>
+                <li class="mb-2 fs-5 text-dark fw-bold">
+                  <strong>Biaya:</strong> Rp
+                  <span id="summary-biaya"></span>
+                </li>
+              </ul>
+              <hr />
+              <div class="input-group mb-3">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Kode Promosi"
+                />
+                <button class="btn btn-outline-secondary" type="button">
+                  Terapkan
+                </button>
+              </div>
+              <hr />
+              <h6 class="mb-3">Metode Pembayaran</h6>
+              <div
+                class="btn-group w-100 mb-3"
+                role="group"
+                id="payment-methods"
+              >
+                <button type="button" class="btn btn-outline-secondary active">
+                  <i class="bi bi-bank"></i> Bank
+                </button>
+                <button type="button" class="btn btn-outline-secondary">
+                  <i class="bi bi-credit-card"></i> Kartu
+                </button>
+                <button type="button" class="btn btn-outline-secondary">
+                  <i class="bi bi-wallet2"></i> E-Wallet
+                </button>
+              </div>
+              <div class="d-grid gap-2">
+                <button
+                  class="btn btn-primary w-100"
+                  id="submit-button"
+                  disabled
+                >
+                  Buat Janji Sekarang
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Receipt Section (Hidden by default) -->
+    <div class="container py-5" id="receipt-section" style="display: none">
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <div class="card text-center shadow-sm">
+            <div class="card-header bg-success text-white">
+              <h5 class="mb-0">✅ Janji Konsultasi Berhasil Dibuat</h5>
+            </div>
+            <div class="card-body p-4">
+              <h5 class="card-title">
+                Terima Kasih, <span id="receipt-nama" class="fw-bold"></span>!
+              </h5>
+              <p class="card-text">
+                Detail konfirmasi dan link sesi telah dikirimkan ke email
+                <strong id="receipt-email"></strong> dan WhatsApp
+                <strong id="receipt-whatsapp"></strong>.
+              </p>
+              <hr />
+              <h6 class="text-start fw-bold mb-3">Detail Janji:</h6>
+              <ul class="list-group list-group-flush text-start">
+                <li class="list-group-item d-flex justify-content-between">
+                  <span>Profesional:</span>
+                  <strong id="receipt-profesional"></strong>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                  <span>Total Biaya:</span>
+                  <strong id="receipt-biaya"></strong>
+                </li>
+              </ul>
+              <a href="index.html" class="btn btn-primary mt-4 px-5"
+                >Kembali ke Beranda</a
+              >
+            </div>
+            <div class="card-footer text-muted small">
+              Mohon periksa folder spam jika Anda tidak menerima email.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer Section -->
+    <footer class="mt-5">
+      <div class="container">
+        <p>
+          &copy; 2025 Ruang Sejiwa 󠁯•󠁏󠁏 Edukasi 󠁯•󠁏󠁏 Screening 󠁯•󠁏󠁏 Konsultasi
+          󠁯•󠁏󠁏 Komunitas
+        </p>
+      </div>
+    </footer>
+
+    <!-- Bootstrap JS & Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+    <script>
+      // Get DOM elements
+      const konsultanListSection = document.getElementById(
+        "konsultan-list-section"
+      );
+      const konfirmasiSection = document.getElementById("konfirmasi-section");
+      const receiptSection = document.getElementById("receipt-section");
+
+      function showConfirmationForm(nama, tarif, durasi) {
+        // 1. Hide consultant list and show confirmation form
+        konsultanListSection.style.display = "none";
+        konfirmasiSection.style.display = "block";
+
+        // 2. Populate the summary
+        document.getElementById("summary-profesional").textContent = nama;
+        document.getElementById("summary-durasi").textContent = durasi;
+        document.getElementById("summary-biaya").textContent =
+          new Intl.NumberFormat("id-ID").format(tarif);
+
+        // 3. Scroll to top for better UX
+        window.scrollTo(0, 0);
+      }
+
+      function hideConfirmationForm() {
+        // Hide confirmation form and show consultant list
+        konfirmasiSection.style.display = "none";
+        konsultanListSection.style.display = "block";
+      }
+
+      function showReceipt() {
+        // --- Simple Validation ---
+        const namaInput = document.getElementById("fullName");
+        const emailInput = document.getElementById("email");
+        if (namaInput.value.trim() === "") {
+          alert("Nama lengkap tidak boleh kosong.");
+          namaInput.focus();
+          return; // Stop execution
+        }
+        if (emailInput.value.trim() === "") {
+          alert("Email tidak boleh kosong.");
+          emailInput.focus();
+          return; // Stop execution
+        }
+
+        // 1. Get data from the form and summary
+        const nama = namaInput.value;
+        const email = emailInput.value;
+        const whatsapp = document.getElementById("whatsapp").value;
+        const profesional = document.getElementById(
+          "summary-profesional"
+        ).textContent;
+        const biaya = document.getElementById("summary-biaya").textContent;
+
+        // 2. Populate the receipt
+        document.getElementById("receipt-nama").textContent = nama;
+        document.getElementById("receipt-email").textContent = email;
+        document.getElementById("receipt-whatsapp").textContent = whatsapp;
+        document.getElementById("receipt-profesional").textContent =
+          profesional;
+        document.getElementById("receipt-biaya").textContent = "Rp " + biaya;
+
+        // 3. Hide confirmation form and show receipt
+        konfirmasiSection.style.display = "none";
+        receiptSection.style.display = "block";
+
+        // 4. Scroll to top
+        window.scrollTo(0, 0);
+      }
+
+      // --- Logic for inside the confirmation form ---
+      document.addEventListener("DOMContentLoaded", function () {
+        const termsCheck = document.getElementById("termsCheck");
+        const submitButton = document.getElementById("submit-button");
+        const paymentMethods = document.getElementById("payment-methods");
+
+        // Handle checkbox and submit button
+        if (termsCheck && submitButton) {
+          termsCheck.addEventListener("change", function () {
+            submitButton.disabled = !this.checked;
+          });
+        }
+
+        // Add click listener to the submit button
+        if (submitButton) {
+          submitButton.addEventListener("click", function (event) {
+            event.preventDefault(); // Prevent any default form submission
+            showReceipt();
+          });
+        }
+
+        // Handle payment method selection
+        if (paymentMethods) {
+          paymentMethods.addEventListener("click", function (event) {
+            // Use event delegation for efficiency
+            const clickedButton = event.target.closest("button");
+            if (clickedButton) {
+              // Remove active class from all sibling buttons
+              for (const button of paymentMethods.children) {
+                button.classList.remove("active");
+              }
+              // Add active class to the clicked button
+              clickedButton.classList.add("active");
+            }
+          });
+        }
+      });
+    </script>
+    <!-- Bootstrap Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
+    />
+  </body>
+</html>
