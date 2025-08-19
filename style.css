@@ -1,0 +1,127 @@
+/* Custom styles for header and footer */
+body {
+  background-color: #f8f9fe;
+}
+
+.navbar-brand {
+  font-weight: bold;
+  color: #333;
+}
+.navbar-brand:hover {
+  font-weight: bold;
+  color: #ff5a5f;
+}
+
+.navbar-nav .nav-link {
+  color: #333;
+}
+.nav-link.active {
+  font-weight: bold;
+}
+
+.navbar-nav .nav-link:hover {
+  color: #ff5a5f;
+}
+
+.btn-first {
+  background-color: #5046e3;
+  color: white;
+}
+
+.btn-first:hover {
+  background-color: #4338ca;
+  color: white;
+}
+
+.btn-outline-secondary {
+  border-color: #96999f;
+  color: #333;
+  background-color: #fff;
+  border-radius: 8px;
+}
+.btn-outline-secondary:hover {
+  background-color: #96999f;
+  color: white;
+  border-radius: 8px;
+}
+.btn-outline-primary {
+  border-color: #5046e3;
+  color: #5046e3;
+  background-color: #fff;
+  border-radius: 8px;
+}
+.btn-outline-primary:hover {
+  background-color: #5046e3;
+  color: white;
+  border-radius: 8px;
+}
+
+.btn.active {
+  background-color: #5046e3;
+  color: white;
+  border-radius: 8px;
+}
+
+.btn-primary {
+  background-color: #4d47e6;
+  border: none;
+  border-radius: 8px;
+}
+.btn-primary:hover {
+  background-color: #3a35c4;
+}
+.btn-success {
+  background-color: #10b982;
+  border: none;
+  border-radius: 8px;
+}
+.btn-success:hover {
+  background-color: #10b982;
+}
+.btn-info {
+  background-color: #0da6e9;
+  border: none;
+  border-radius: 8px;
+}
+.btn-info:hover {
+  background-color: #0da6e9;
+}
+.btn-danger {
+  background-color: #ee4444;
+  border: none;
+  border-radius: 8px;
+}
+.btn-danger:hover {
+  background-color: #ee4444;
+}
+
+.question-card {
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 1rem;
+  background-color: #fff;
+}
+.question-card .btn {
+  border-radius: 20px;
+  min-width: 70px;
+}
+
+.rounded-3 {
+  border-radius: 8px;
+}
+
+footer {
+  background-color: #f8f9fa;
+  padding: 20px 0;
+  text-align: center;
+}
+
+footer a {
+  color: #333;
+  text-decoration: none;
+}
+
+footer a:hover {
+  color: #ff5a5f;
+}
