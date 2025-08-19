@@ -249,7 +249,7 @@
         // Determine recommendation based on score. A common threshold for SRQ-20 is 8.
         let recommendationText = "";
         let alertClass = "";
-        if (yesCount <= 7) {
+        if (yesCount >= 8) {
           recommendationText = "Anda butuh evaluasi psikiatrik lebih lanjut";
           alertClass = "alert-warning";
         } else {
