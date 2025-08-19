@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Penyedia</title>
+    <!-- Bootstrap 5 CDN -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- Header Section -->
+    <!-- <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+      <div class="container">
+        <a class="navbar-brand" href="#"
+          ><i class="bi bi-heart-fill text-danger"></i> Ruang Sejiwa</a
+        >
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="#">Beranda</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Eduksi</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Screening</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Konsultasi</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Komunitas</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="#">Penyedia</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">SOS</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav> -->
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg bg-white border-bottom px-3">
+      <div class="container">
+        <a class="navbar-brand d-flex align-items-center" href="#">
+          <span class="text-danger fs-4 me-2">♥</span>
+          Ruang Sejiwa
+        </a>
+        <div class="collapse navbar-collapse">
+          <ul class="navbar-nav ms-3">
+            <li class="nav-item"><a class="nav-link" href="#">Beranda</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">Edukasi</a></li>
+            <li class="nav-item">
+              <a class="nav-link" href="screening.html">Screening</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Konsultasi</a>
+            </li>
+            <li class="nav-item"><a class="nav-link" href="#">Komunitas</a></li>
+            <li class="nav-item">
+              <a class="nav-link active fw-bold" href="penyedia.html"
+                >Penyedia</a
+              >
+            </li>
+            <li class="nav-item"><a class="nav-link" href="#">SOS</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mt-4">
+      <h1 class="fw-bold">Penyedia Layanan Kesehatan Mental</h1>
+
+      <!-- Search & Filters -->
+      <div
+        class="d-flex flex-row text-nowrap gap-2 mb-4 justify-content-between"
+      >
+        <input
+          type="text"
+          class="form-control flex-grow-1 rounded-3"
+          placeholder="Cari: psikolog/psikiater/klinik..."
+        />
+        <button class="text-start btn btn-outline-primary px-5 rounded-3">
+          Lokasi saya
+        </button>
+        <button class="btn btn-outline-secondary px-5 rounded-3">Online</button>
+        <button class="btn btn-outline-secondary px-5 rounded-3">
+          Offline
+        </button>
+      </div>
+
+      <!-- Provider Card -->
+      <div class="card mb-3 rounded-3">
+        <div class="card-body d-flex justify-content-between align-items-start">
+          <div>
+            <h5 class="fw-bold mb-1">Klinik Sejiwa Harmoni</h5>
+            <p class="mb-1 text-muted">Psikiater & Psikolog • Offline/Online</p>
+            <small class="text-muted"
+              >± 1.1 km • 4.8⭐ • Buka 09:00-20:00</small
+            >
+          </div>
+          <div class="d-flex flex-lg-row flex-sm-column gap-2">
+            <button class="btn btn-outline-primary btn-sm rounded-3 px-5">
+              Detail
+            </button>
+            <button class="btn btn-first btn-sm rounded-3 px-5">
+              Buat Janji
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="card mb-3 rounded-3">
+        <div class="card-body d-flex justify-content-between align-items-start">
+          <div>
+            <h5 class="fw-bold mb-1">Mindful Center</h5>
+            <p class="mb-1 text-muted">Psikolog Klinis • Online</p>
+            <small class="text-muted"
+              >0 km (online) • 4.7⭐ • Janji 10:00–22:00</small
+            >
+          </div>
+          <div class="d-flex flex-lg-row flex-sm-column gap-2">
+            <button class="btn btn-outline-primary btn-sm rounded-3 px-5">
+              Detail
+            </button>
+            <button class="btn btn-first btn-sm rounded-3 px-5">
+              Buat Janji
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="card mb-3 rounded-3">
+        <div class="card-body d-flex justify-content-between align-items-start">
+          <div>
+            <h5 class="fw-bold mb-1">RS Jiwa Kota</h5>
+            <p class="mb-1 text-muted">Layanan Darurat • 24/7</p>
+            <small class="text-muted">± 5.4 km • 119 ext 8 • Rujukan IGD</small>
+          </div>
+          <div class="d-flex flex-lg-row flex-sm-column gap-2">
+            <button class="btn btn-outline-primary btn-sm rounded-3 px-5">
+              Detail
+            </button>
+            <button class="btn btn-first btn-sm rounded-3 px-5">
+              Buat Janji
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="card mb-3 rounded-3">
+        <div class="card-body d-flex justify-content-between align-items-start">
+          <div>
+            <h5 class="fw-bold mb-1">Praktek dr. Mira, Sp.KJ</h5>
+            <p class="mb-1 text-muted">Psikiater • Offline</p>
+            <small class="text-muted">± 3.2 km • 4.9⭐ • Selasa & Kamis</small>
+          </div>
+          <div class="d-flex flex-lg-row flex-sm-column gap-2">
+            <button class="btn btn-outline-primary btn-sm rounded-3 px-5">
+              Detail
+            </button>
+            <button class="btn btn-first btn-sm rounded-3 px-5">
+              Buat Janji
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer Section -->
+    <footer class="fixed-bottom">
+      <div class="container">
+        <p>
+          &copy; 2025 Ruang Sejiwa 󠁯•󠁏󠁏 Edukasi 󠁯•󠁏󠁏 Screening 󠁯•󠁏󠁏 Konsultasi
+          󠁯•󠁏󠁏 Komunitas
+        </p>
+      </div>
+    </footer>
+
+    <!-- Bootstrap JS & Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+    <!-- Bootstrap Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
+    />
+  </body>
+</html>
