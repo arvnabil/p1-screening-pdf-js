@@ -3,6 +3,16 @@ body {
   background-color: #f8f9fe;
 }
 
+.progress {
+  height: 20px;
+  border-radius: 12px;
+}
+
+.progress-bar {
+  background-color: #5046e3;
+  border-radius: 12px;
+}
+
 .navbar-brand {
   font-weight: bold;
   color: #333;
@@ -70,14 +80,39 @@ body {
 .btn-primary:hover {
   background-color: #3a35c4;
 }
+
+.text-primary {
+  color: #4d47e6;
+}
+.border-primary {
+  border-color: #4d47e6;
+}
+
+.btn-dark {
+  background-color: #0e182c;
+  border: none;
+  border-radius: 8px;
+}
+.btn-dark:hover {
+  background-color: #040414ff;
+}
 .btn-success {
   background-color: #10b982;
   border: none;
   border-radius: 8px;
 }
+
 .btn-success:hover {
   background-color: #10b982;
 }
+
+.text-success {
+  color: #10b982;
+}
+.border-success {
+  border-color: #10b982;
+}
+
 .btn-info {
   background-color: #0da6e9;
   border: none;
@@ -95,6 +130,13 @@ body {
   background-color: #ee4444;
 }
 
+.text-danger {
+  color: #ee4444;
+}
+.border-danger {
+  border-color: #ee4444;
+}
+
 .question-card {
   border: 1px solid #e0e0e0;
   border-radius: 12px;
@@ -105,6 +147,14 @@ body {
 .question-card .btn {
   border-radius: 20px;
   min-width: 70px;
+}
+
+.card-custom {
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  padding: 20px;
+  margin-bottom: 20px;
+  background: #fff;
 }
 
 .rounded-3 {
