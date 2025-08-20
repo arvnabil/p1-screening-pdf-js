@@ -78,7 +78,5 @@ app.delete("/api/janji-temu/:id", async (req, res) => {
   }
 });
 
-app.listen(port, () => {
-  console.log(`Server berjalan di http://localhost:${port}`);
-  console.log("Buka http://localhost:3000/index.html di browser Anda.");
-});
+// Ekspor aplikasi Express agar Vercel dapat menggunakannya
+module.exports = app;
