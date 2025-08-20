@@ -8,6 +8,15 @@ document.addEventListener("DOMContentLoaded", function () {
   const receiptSection = document.getElementById("receipt-section");
   const kembaliBtn = document.getElementById("btn-kembali");
 
+  // Inisialisasi instance Modal Bootstrap
+  const processingModal = new bootstrap.Modal(
+    document.getElementById("processingModal")
+  );
+  const successModal = new bootstrap.Modal(
+    document.getElementById("successModal")
+  );
+  const delay = (ms) => new Promise((res) => setTimeout(res, ms));
+
   function showConfirmationForm(nama, tarif, durasi) {
     if (konsultanListSection && konfirmasiSection) {
       konsultanListSection.style.display = "none";
@@ -29,7 +38,20 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  function showReceipt() {
+  /*************  ✨ Windsurf Command ⭐  *************/
+  /**
+   * Menampilkan halaman struk setelah data janji temu disimpan ke Supabase.
+   *
+   * @async
+   * @function
+   * @returns {Promise<void>}
+   */
+  /*******  5151be4d-4a70-43e6-be07-3b1a521e7424  *******/
+  async function showReceipt() {
+    // Tampilkan modal pemrosesan
+    processingModal.show();
+    const processingStartTime = Date.now(); // Catat waktu mulai
+
     const namaInput = document.getElementById("fullName");
     const emailInput = document.getElementById("email");
     const tujuanSelect = document.getElementById("tujuan");
@@ -58,19 +80,72 @@ document.addEventListener("DOMContentLoaded", function () {
     const tujuanText = tujuanSelect.options[tujuanSelect.selectedIndex].text;
     const biaya = document.getElementById("summary-biaya").textContent;
 
-    document.getElementById("receipt-nama").textContent = nama;
-    document.getElementById("receipt-email").textContent = email;
-    document.getElementById("receipt-whatsapp").textContent = whatsapp;
-    document.getElementById("receipt-profesional").textContent = profesional;
-    document.getElementById("receipt-biaya").textContent = "Rp " + biaya;
-    document.getElementById("receipt-tujuan").textContent = tujuanText;
+    // Data yang akan dikirim ke Supabase
+    const appointmentData = {
+      nama_lengkap: nama,
+      email: email,
+      whatsapp: whatsapp,
+      profesional: profesional,
+      tujuan_sesi: tujuanText,
+      biaya: "Rp " + biaya,
+    };
 
-    if (konfirmasiSection && receiptSection) {
-      konfirmasiSection.style.display = "none";
-      receiptSection.style.display = "block";
+    try {
+      const response = await fetch("/api/janji-temu", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(appointmentData),
+      });
+
+      if (!response.ok) {
+        // Coba baca pesan error dari body response server jika ada
+        const errorData = await response.json().catch(() => null);
+        const errorMessage =
+          errorData?.error ||
+          `Server merespon dengan status: ${response.status}`;
+        throw new Error(errorMessage);
+      }
+
+      // Pastikan modal proses tampil minimal 3 detik
+      const processingTimeElapsed = Date.now() - processingStartTime;
+      const remainingProcessingTime = 3000 - processingTimeElapsed;
+      if (remainingProcessingTime > 0) {
+        await delay(remainingProcessingTime);
+      }
+
+      // Jika berhasil, sembunyikan modal proses dan tampilkan modal sukses
+      processingModal.hide();
+      successModal.show();
+
+      // Tunggu 5 detik
+      await delay(5000);
+
+      // Sembunyikan modal sukses, lalu tunggu sebentar untuk efek fade out
+      successModal.hide();
+      await delay(400);
+
+      // Isi dan tampilkan halaman struk
+      document.getElementById("receipt-nama").textContent = nama;
+      document.getElementById("receipt-email").textContent = email;
+      document.getElementById("receipt-whatsapp").textContent = whatsapp;
+      document.getElementById("receipt-profesional").textContent = profesional;
+      document.getElementById("receipt-biaya").textContent = "Rp " + biaya;
+      document.getElementById("receipt-tujuan").textContent = tujuanText;
+
+      if (konfirmasiSection && receiptSection) {
+        konfirmasiSection.style.display = "none";
+        receiptSection.style.display = "block";
+      }
+
+      window.scrollTo(0, 0);
+    } catch (error) {
+      // Jika gagal, sembunyikan modal proses dan tampilkan alert error
+      processingModal.hide();
+      await delay(200); // Beri jeda agar modal hilang sebelum alert muncul
+      alert("Terjadi kesalahan saat menyimpan janji temu. Silakan coba lagi.");
+      console.error("Error saving appointment:", error);
+      return; // Hentikan proses jika gagal menyimpan
     }
-
-    window.scrollTo(0, 0);
   }
 
   // --- EVENT LISTENERS ---

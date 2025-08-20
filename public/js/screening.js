@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", function () {
     ],
     [
       "Apakah Anda merasa tidak ada harapan?",
-      "Apakah Anda merasa kehilangan minat pada hal-hal yang dulu menyenankan?",
+      "Apakah Anda merasa kehilangan minat pada hal-hal yang dulu menyenangkan?",
       "Apakah Anda merasa mudah tersinggung atau marah?",
       "Apakah Anda merasa cemas tentang kesehatan Anda?",
       "Apakah Anda merasa kesepian?",

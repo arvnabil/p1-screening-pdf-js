@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Daftar Janji Temu</title>
+    <!-- Bootstrap 5 CDN -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg bg-white border-bottom px-3">
+      <div class="container">
+        <a class="navbar-brand d-flex align-items-center" href="#">
+          ❤️ Ruang Sejiwa
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="index.html">Beranda</a>
+            </li>
+            <li class="nav-item"><a class="nav-link" href="#">Edukasi</a></li>
+            <li class="nav-item">
+              <a class="nav-link" href="screening.html">Screening</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="konsultasi.html">Konsultasi</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="komunitas.html">Komunitas</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="penyedia.html">Penyedia</a>
+            </li>
+            <li class="nav-item"><a class="nav-link" href="#">SOS</a></li>
+            <li class="nav-item">
+              <a class="nav-link active fw-bold" href="daftar-janji.html"
+                >Daftar Janji</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container py-5">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+          <h1 class="fw-bold mb-1">Daftar Janji Temu</h1>
+          <p class="text-muted mb-0">
+            Berikut adalah daftar semua janji temu yang telah dibuat.
+          </p>
+        </div>
+        <div class="d-flex gap-2">
+          <button class="btn btn-primary" id="export-excel-btn">
+            <i class="bi bi-file-earmark-excel"></i> Export
+          </button>
+          <button class="btn btn-outline-danger" id="logout-btn">
+            <i class="bi bi-box-arrow-right"></i> Logout
+          </button>
+        </div>
+      </div>
+
+      <!-- Search and Filter Row -->
+      <div class="row g-3 mb-4">
+        <div class="col-md-6">
+          <input
+            type="text"
+            id="search-input"
+            class="form-control"
+            placeholder="Cari berdasarkan nama pasien atau tujuan sesi..."
+          />
+        </div>
+        <div class="col-md-4">
+          <select class="form-select" id="profesional-filter">
+            <option value="">Semua Profesional</option>
+            <!-- Opsi akan diisi oleh JavaScript -->
+          </select>
+        </div>
+        <div class="col-md-2 d-grid">
+          <button class="btn btn-outline-secondary" id="reset-filter-btn">
+            Reset
+          </button>
+        </div>
+      </div>
+
+      <!-- Tabel untuk menampilkan data janji temu -->
+      <div class="table-responsive mt-4">
+        <table class="table table-striped table-hover align-middle">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Pasien</th>
+              <th scope="col">Profesional</th>
+              <th scope="col">Tujuan Sesi</th>
+              <th scope="col">Tanggal Dibuat</th>
+              <th scope="col">Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="janji-temu-tbody">
+            <!-- Data akan dimuat di sini oleh JavaScript -->
+          </tbody>
+        </table>
+      </div>
+      <div id="loading-state" class="text-center mt-4"></div>
+    </div>
+
+    <!-- Bootstrap JS & Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+    <!-- SheetJS (XLSX) library for Excel export -->
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.2/package/dist/xlsx.full.min.js"></script>
+    <!-- Custom Script -->
+    <script src="js/daftar-janji.js"></script>
+    <!-- Bootstrap Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
+    />
+  </body>
+</html>
