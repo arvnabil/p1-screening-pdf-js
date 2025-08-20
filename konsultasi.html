@@ -73,31 +73,59 @@
                 <div class="flex-grow-1">
                   <input
                     type="text"
+                    id="search-input"
                     class="form-control rounded-3"
-                    placeholder="Cari: psikolog/psikiater/klinik..."
+                    placeholder="Cari nama atau fokus (cth: cemas, burnout, tidur)..."
                   />
                 </div>
-                <button
-                  type="button"
-                  class="px-5 btn btn-outline-primary active"
-                >
-                  Online
-                </button>
-                <button type="button" class="px-5 btn btn-outline-success">
-                  &lt; Rp 400K&gt;
-                </button>
-                <button type="button" class="px-5 btn btn-outline-info">
-                  Bahasa Indoensia
-                </button>
-                <button type="button" class="px-5 btn btn-outline-danger">
-                  Tesedia hari ini
-                </button>
+                <div id="filter-buttons" class="d-flex flex-wrap gap-2">
+                  <button
+                    type="button"
+                    class="px-4 btn btn-outline-primary filter-btn"
+                    data-filter="metode"
+                    data-value="online"
+                  >
+                    Online
+                  </button>
+                  <button
+                    type="button"
+                    class="px-4 btn btn-outline-success filter-btn"
+                    data-filter="tarif"
+                    data-value="400000"
+                  >
+                    &lt; Rp 400K
+                  </button>
+                  <button
+                    type="button"
+                    class="px-4 btn btn-outline-info filter-btn"
+                    data-filter="bahasa"
+                    data-value="indonesia"
+                  >
+                    Bahasa Indonesia
+                  </button>
+                  <button
+                    type="button"
+                    class="px-4 btn btn-outline-danger filter-btn"
+                    data-filter="ketersediaan"
+                    data-value="hari-ini"
+                  >
+                    Tersedia hari ini
+                  </button>
+                </div>
               </div>
             </div>
           </div>
 
           <!-- Provider Card -->
-          <div class="card mb-3 rounded-3">
+          <div
+            class="card mb-3 rounded-3 provider-card"
+            data-nama="dr. Mira, Sp.KJ"
+            data-fokus="stress kerja,kecemasan,tidur"
+            data-metode="online"
+            data-tarif="250000"
+            data-bahasa="indonesia"
+            data-ketersediaan="hari-ini"
+          >
             <div
               class="card-body d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center"
             >
@@ -123,7 +151,15 @@
             </div>
           </div>
           <!-- Provider Card -->
-          <div class="card mb-3 rounded-3">
+          <div
+            class="card mb-3 rounded-3 provider-card"
+            data-nama="Raka, M.Psi, Psi"
+            data-fokus="burnout,manajemen,emosi"
+            data-metode="online"
+            data-tarif="200000"
+            data-bahasa="indonesia"
+            data-ketersediaan="besok"
+          >
             <div
               class="card-body d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center"
             >
@@ -149,7 +185,15 @@
             </div>
           </div>
           <!-- Provider Card -->
-          <div class="card mb-3 rounded-3">
+          <div
+            class="card mb-3 rounded-3 provider-card"
+            data-nama="dr. Santi, Sp. Kj (K)"
+            data-fokus="mood,sleep"
+            data-metode="online"
+            data-tarif="400000"
+            data-bahasa="indonesia"
+            data-ketersediaan="hari-ini"
+          >
             <div
               class="card-body d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center"
             >
@@ -223,15 +267,23 @@
                   />
                 </div>
                 <div class="mb-3">
-                  <label for="tujuan" class="form-label"
-                    >Tujuan Sesi (Opsional)</label
-                  >
-                  <textarea
-                    class="form-control"
-                    id="tujuan"
-                    rows="3"
-                    placeholder="Ceritakan singkat apa yang ingin Anda diskusikan"
-                  ></textarea>
+                  <label for="tujuan" class="form-label">Tujuan Sesi</label>
+                  <select class="form-select" id="tujuan">
+                    <option selected value="">Pilih tujuan sesi...</option>
+                    <option value="manajemen-stress">
+                      Konsultasi manajemen stress
+                    </option>
+                    <option value="masalah-keluarga">
+                      Konsultasi masalah keluarga
+                    </option>
+                    <option value="manajemen-emosi">
+                      Konsultasi manajemen emosi
+                    </option>
+                    <option value="masalah-kecemasan">
+                      Konsultasi masalah kecemasan
+                    </option>
+                    <option value="lainnya">Lainnya</option>
+                  </select>
                 </div>
               </form>
 
@@ -273,6 +325,10 @@
                 <li class="mb-2">
                   <strong>Durasi:</strong>
                   <span id="summary-durasi"></span> Menit
+                </li>
+                <li class="mb-2">
+                  <strong>Tujuan:</strong>
+                  <span id="summary-tujuan">Belum dipilih</span>
                 </li>
                 <li class="mb-2 fs-5 text-dark fw-bold">
                   <strong>Biaya:</strong> Rp
@@ -347,6 +403,10 @@
                   <strong id="receipt-profesional"></strong>
                 </li>
                 <li class="list-group-item d-flex justify-content-between">
+                  <span>Tujuan Sesi:</span>
+                  <strong id="receipt-tujuan"></strong>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
                   <span>Total Biaya:</span>
                   <strong id="receipt-biaya"></strong>
                 </li>
@@ -409,6 +469,7 @@
         // --- Simple Validation ---
         const namaInput = document.getElementById("fullName");
         const emailInput = document.getElementById("email");
+        const tujuanSelect = document.getElementById("tujuan");
         if (namaInput.value.trim() === "") {
           alert("Nama lengkap tidak boleh kosong.");
           namaInput.focus();
@@ -419,6 +480,11 @@
           emailInput.focus();
           return; // Stop execution
         }
+        if (tujuanSelect.value === "") {
+          alert("Silakan pilih tujuan sesi.");
+          tujuanSelect.focus();
+          return; // Stop execution
+        }
 
         // 1. Get data from the form and summary
         const nama = namaInput.value;
@@ -427,6 +493,8 @@
         const profesional = document.getElementById(
           "summary-profesional"
         ).textContent;
+        const tujuanText =
+          tujuanSelect.options[tujuanSelect.selectedIndex].text;
         const biaya = document.getElementById("summary-biaya").textContent;
 
         // 2. Populate the receipt
@@ -436,6 +504,7 @@
         document.getElementById("receipt-profesional").textContent =
           profesional;
         document.getElementById("receipt-biaya").textContent = "Rp " + biaya;
+        document.getElementById("receipt-tujuan").textContent = tujuanText;
 
         // 3. Hide confirmation form and show receipt
         konfirmasiSection.style.display = "none";
@@ -450,6 +519,8 @@
         const termsCheck = document.getElementById("termsCheck");
         const submitButton = document.getElementById("submit-button");
         const paymentMethods = document.getElementById("payment-methods");
+        const tujuanSelect = document.getElementById("tujuan");
+        const summaryTujuan = document.getElementById("summary-tujuan");
 
         // Handle checkbox and submit button
         if (termsCheck && submitButton) {
@@ -481,6 +552,81 @@
             }
           });
         }
+
+        // Handle Tujuan Sesi selection to update summary
+        if (tujuanSelect && summaryTujuan) {
+          tujuanSelect.addEventListener("change", function () {
+            const selectedOption = this.options[this.selectedIndex];
+            if (selectedOption.value) {
+              summaryTujuan.textContent = selectedOption.text;
+            } else {
+              summaryTujuan.textContent = "Belum dipilih";
+            }
+          });
+        }
+
+        // --- Dynamic Filter Logic ---
+        const searchInput = document.getElementById("search-input");
+        const filterButtonsContainer =
+          document.getElementById("filter-buttons");
+        const providerCards = document.querySelectorAll(".provider-card");
+
+        function applyFilters() {
+          const searchTerm = searchInput.value.toLowerCase();
+          const activeFilters =
+            filterButtonsContainer.querySelectorAll(".btn.active");
+
+          providerCards.forEach((card) => {
+            let isVisible = true;
+
+            // 1. Check search term against name and focus
+            const nama = card.dataset.nama.toLowerCase();
+            const fokus = card.dataset.fokus
+              ? card.dataset.fokus.toLowerCase()
+              : "";
+            if (!nama.includes(searchTerm) && !fokus.includes(searchTerm)) {
+              isVisible = false;
+            }
+
+            // 2. Check active filters if still visible
+            if (isVisible && activeFilters.length > 0) {
+              activeFilters.forEach((filterBtn) => {
+                const filterType = filterBtn.dataset.filter;
+                const filterValue = filterBtn.dataset.value;
+                const cardValue = card.dataset[filterType];
+
+                switch (filterType) {
+                  case "metode":
+                  case "bahasa":
+                  case "ketersediaan":
+                    if (cardValue !== filterValue) {
+                      isVisible = false;
+                    }
+                    break;
+                  case "tarif":
+                    // Filter for price LESS THAN the filterValue
+                    if (parseInt(cardValue) >= parseInt(filterValue)) {
+                      isVisible = false;
+                    }
+                    break;
+                }
+              });
+            }
+
+            card.style.display = isVisible ? "block" : "none";
+          });
+        }
+
+        // Event listener for search input
+        searchInput.addEventListener("input", applyFilters);
+
+        // Event listener for filter buttons (using delegation)
+        filterButtonsContainer.addEventListener("click", (event) => {
+          if (event.target.classList.contains("filter-btn")) {
+            event.target.classList.toggle("active");
+            applyFilters();
+          }
+        });
       });
     </script>
     <!-- Bootstrap Icons -->
