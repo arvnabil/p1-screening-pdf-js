@@ -86,5 +86,5 @@ if (require.main === module) {
   });
 }
 
-// Ekspor aplikasi Express agar Vercel dapat menggunakannya
+// Ekspor aplikasi Express agar dapat digunakan oleh platform hosting (seperti Vercel, Render, dll.)
 module.exports = app;
