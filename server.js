@@ -34,6 +34,15 @@ app.use(express.json());
 // Endpoint API untuk MENYIMPAN janji temu baru
 app.post("/api/janji-temu", async (req, res) => {
   try {
+    // --- SARAN: Validasi Input Sederhana ---
+    // const { nama_pasien, tanggal, waktu } = req.body;
+    // if (!nama_pasien || !tanggal || !waktu) {
+    //   return res.status(400).json({
+    //     error:
+    //       "Input tidak lengkap. Pastikan 'nama_pasien', 'tanggal', dan 'waktu' disertakan.",
+    //   });
+    // }
+
     const { data, error } = await supabase
       .from("janji_temu")
       .insert([req.body]) // req.body berisi data dari form
