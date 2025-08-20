@@ -25,8 +25,9 @@ if (supabaseUrl.startsWith("postgres")) {
 }
 const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
-// Middleware untuk menyajikan file statis dari direktori 'public'
+// Middleware to serve static files from the 'public' directory for local development
 app.use(express.static(path.join(__dirname, "public")));
+
 // Middleware untuk membaca body JSON dari request
 app.use(express.json());
 
@@ -77,6 +78,13 @@ app.delete("/api/janji-temu/:id", async (req, res) => {
     res.status(500).json({ error: `Gagal menghapus data: ${error.message}` });
   }
 });
+
+// Jalankan server hanya jika file ini dieksekusi secara langsung (untuk pengembangan lokal)
+if (require.main === module) {
+  app.listen(port, () => {
+    console.log(`Server berjalan di http://localhost:${port}/index.html`);
+  });
+}
 
 // Ekspor aplikasi Express agar Vercel dapat menggunakannya
 module.exports = app;
