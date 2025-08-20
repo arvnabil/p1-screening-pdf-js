@@ -125,6 +125,7 @@
             data-tarif="250000"
             data-bahasa="indonesia"
             data-ketersediaan="hari-ini"
+            data-durasi="45"
           >
             <div
               class="card-body d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center"
@@ -142,8 +143,7 @@
                 class="d-flex flex-column flex-md-row gap-2 mt-3 mt-sm-0 flex-shrink-0"
               >
                 <button
-                  onclick="showConfirmationForm('dr. Mira, Sp.KJ', 250000, 45)"
-                  class="btn btn-first btn-sm rounded-3 px-4"
+                  class="btn btn-first btn-sm rounded-3 px-4 btn-lihat-jadwal"
                 >
                   Lihat Jadwal
                 </button>
@@ -159,6 +159,7 @@
             data-tarif="200000"
             data-bahasa="indonesia"
             data-ketersediaan="besok"
+            data-durasi="45"
           >
             <div
               class="card-body d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center"
@@ -176,8 +177,7 @@
                 class="d-flex flex-column flex-md-row gap-2 mt-3 mt-sm-0 flex-shrink-0"
               >
                 <button
-                  onclick="showConfirmationForm('Raka, M.Psi, Psi', 200000, 45)"
-                  class="btn btn-first btn-sm rounded-3 px-4"
+                  class="btn btn-first btn-sm rounded-3 px-4 btn-lihat-jadwal"
                 >
                   Lihat Jadwal
                 </button>
@@ -193,6 +193,7 @@
             data-tarif="400000"
             data-bahasa="indonesia"
             data-ketersediaan="hari-ini"
+            data-durasi="45"
           >
             <div
               class="card-body d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center"
@@ -208,8 +209,7 @@
                 class="d-flex flex-column flex-md-row gap-2 mt-3 mt-sm-0 flex-shrink-0"
               >
                 <button
-                  onclick="showConfirmationForm('dr. Santi, Sp. Kj (K)', 400000, 45)"
-                  class="btn btn-first btn-sm rounded-3 px-4"
+                  class="btn btn-first btn-sm rounded-3 px-4 btn-lihat-jadwal"
                 >
                   Lihat Jadwal
                 </button>
@@ -225,10 +225,7 @@
       <div class="row">
         <div class="d-flex justify-content-between align-items-center">
           <h1 class="fw-bold">Konfirmasi Janji Konsultasi</h1>
-          <button
-            onclick="hideConfirmationForm()"
-            class="btn btn-sm btn-outline-secondary"
-          >
+          <button id="btn-kembali" class="btn btn-sm btn-outline-secondary">
             &larr; Kembali
           </button>
         </div>
@@ -436,199 +433,8 @@
     <!-- Bootstrap JS & Popper -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
-    <script>
-      // Get DOM elements
-      const konsultanListSection = document.getElementById(
-        "konsultan-list-section"
-      );
-      const konfirmasiSection = document.getElementById("konfirmasi-section");
-      const receiptSection = document.getElementById("receipt-section");
-
-      function showConfirmationForm(nama, tarif, durasi) {
-        // 1. Hide consultant list and show confirmation form
-        konsultanListSection.style.display = "none";
-        konfirmasiSection.style.display = "block";
-
-        // 2. Populate the summary
-        document.getElementById("summary-profesional").textContent = nama;
-        document.getElementById("summary-durasi").textContent = durasi;
-        document.getElementById("summary-biaya").textContent =
-          new Intl.NumberFormat("id-ID").format(tarif);
-
-        // 3. Scroll to top for better UX
-        window.scrollTo(0, 0);
-      }
-
-      function hideConfirmationForm() {
-        // Hide confirmation form and show consultant list
-        konfirmasiSection.style.display = "none";
-        konsultanListSection.style.display = "block";
-      }
-
-      function showReceipt() {
-        // --- Simple Validation ---
-        const namaInput = document.getElementById("fullName");
-        const emailInput = document.getElementById("email");
-        const tujuanSelect = document.getElementById("tujuan");
-        if (namaInput.value.trim() === "") {
-          alert("Nama lengkap tidak boleh kosong.");
-          namaInput.focus();
-          return; // Stop execution
-        }
-        if (emailInput.value.trim() === "") {
-          alert("Email tidak boleh kosong.");
-          emailInput.focus();
-          return; // Stop execution
-        }
-        if (tujuanSelect.value === "") {
-          alert("Silakan pilih tujuan sesi.");
-          tujuanSelect.focus();
-          return; // Stop execution
-        }
-
-        // 1. Get data from the form and summary
-        const nama = namaInput.value;
-        const email = emailInput.value;
-        const whatsapp = document.getElementById("whatsapp").value;
-        const profesional = document.getElementById(
-          "summary-profesional"
-        ).textContent;
-        const tujuanText =
-          tujuanSelect.options[tujuanSelect.selectedIndex].text;
-        const biaya = document.getElementById("summary-biaya").textContent;
-
-        // 2. Populate the receipt
-        document.getElementById("receipt-nama").textContent = nama;
-        document.getElementById("receipt-email").textContent = email;
-        document.getElementById("receipt-whatsapp").textContent = whatsapp;
-        document.getElementById("receipt-profesional").textContent =
-          profesional;
-        document.getElementById("receipt-biaya").textContent = "Rp " + biaya;
-        document.getElementById("receipt-tujuan").textContent = tujuanText;
-
-        // 3. Hide confirmation form and show receipt
-        konfirmasiSection.style.display = "none";
-        receiptSection.style.display = "block";
-
-        // 4. Scroll to top
-        window.scrollTo(0, 0);
-      }
-
-      // --- Logic for inside the confirmation form ---
-      document.addEventListener("DOMContentLoaded", function () {
-        const termsCheck = document.getElementById("termsCheck");
-        const submitButton = document.getElementById("submit-button");
-        const paymentMethods = document.getElementById("payment-methods");
-        const tujuanSelect = document.getElementById("tujuan");
-        const summaryTujuan = document.getElementById("summary-tujuan");
-
-        // Handle checkbox and submit button
-        if (termsCheck && submitButton) {
-          termsCheck.addEventListener("change", function () {
-            submitButton.disabled = !this.checked;
-          });
-        }
-
-        // Add click listener to the submit button
-        if (submitButton) {
-          submitButton.addEventListener("click", function (event) {
-            event.preventDefault(); // Prevent any default form submission
-            showReceipt();
-          });
-        }
-
-        // Handle payment method selection
-        if (paymentMethods) {
-          paymentMethods.addEventListener("click", function (event) {
-            // Use event delegation for efficiency
-            const clickedButton = event.target.closest("button");
-            if (clickedButton) {
-              // Remove active class from all sibling buttons
-              for (const button of paymentMethods.children) {
-                button.classList.remove("active");
-              }
-              // Add active class to the clicked button
-              clickedButton.classList.add("active");
-            }
-          });
-        }
-
-        // Handle Tujuan Sesi selection to update summary
-        if (tujuanSelect && summaryTujuan) {
-          tujuanSelect.addEventListener("change", function () {
-            const selectedOption = this.options[this.selectedIndex];
-            if (selectedOption.value) {
-              summaryTujuan.textContent = selectedOption.text;
-            } else {
-              summaryTujuan.textContent = "Belum dipilih";
-            }
-          });
-        }
-
-        // --- Dynamic Filter Logic ---
-        const searchInput = document.getElementById("search-input");
-        const filterButtonsContainer =
-          document.getElementById("filter-buttons");
-        const providerCards = document.querySelectorAll(".provider-card");
-
-        function applyFilters() {
-          const searchTerm = searchInput.value.toLowerCase();
-          const activeFilters =
-            filterButtonsContainer.querySelectorAll(".btn.active");
-
-          providerCards.forEach((card) => {
-            let isVisible = true;
-
-            // 1. Check search term against name and focus
-            const nama = card.dataset.nama.toLowerCase();
-            const fokus = card.dataset.fokus
-              ? card.dataset.fokus.toLowerCase()
-              : "";
-            if (!nama.includes(searchTerm) && !fokus.includes(searchTerm)) {
-              isVisible = false;
-            }
-
-            // 2. Check active filters if still visible
-            if (isVisible && activeFilters.length > 0) {
-              activeFilters.forEach((filterBtn) => {
-                const filterType = filterBtn.dataset.filter;
-                const filterValue = filterBtn.dataset.value;
-                const cardValue = card.dataset[filterType];
-
-                switch (filterType) {
-                  case "metode":
-                  case "bahasa":
-                  case "ketersediaan":
-                    if (cardValue !== filterValue) {
-                      isVisible = false;
-                    }
-                    break;
-                  case "tarif":
-                    // Filter for price LESS THAN the filterValue
-                    if (parseInt(cardValue) >= parseInt(filterValue)) {
-                      isVisible = false;
-                    }
-                    break;
-                }
-              });
-            }
-
-            card.style.display = isVisible ? "block" : "none";
-          });
-        }
-
-        // Event listener for search input
-        searchInput.addEventListener("input", applyFilters);
-
-        // Event listener for filter buttons (using delegation)
-        filterButtonsContainer.addEventListener("click", (event) => {
-          if (event.target.classList.contains("filter-btn")) {
-            event.target.classList.toggle("active");
-            applyFilters();
-          }
-        });
-      });
-    </script>
+    <!-- Custom Script -->
+    <script src="js/konsultasi.js"></script>
     <!-- Bootstrap Icons -->
     <link
       rel="stylesheet"
