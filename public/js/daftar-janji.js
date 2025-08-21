@@ -47,24 +47,35 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (appointment.jadwal) {
       const jadwalDate = new Date(appointment.jadwal);
+      // Check if the date is valid before formatting
+      if (!isNaN(jadwalDate.getTime())) {
+        // Format Tanggal: "Sabtu, 21 Agustus 2025"
+        // We use "UTC" to display the date and time as it was stored,
+        // avoiding automatic conversion to the browser's local timezone.
+        jadwalTanggal = jadwalDate.toLocaleDateString("id-ID", {
+          weekday: "long",
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+          timeZone: "UTC",
+        });
 
-      // Format Tanggal: "Sabtu, 21 Agustus 2025"
-      jadwalTanggal = jadwalDate.toLocaleDateString("id-ID", {
-        weekday: "long",
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-        timeZone: "Asia/Jakarta", // Pastikan timezone konsisten
-      });
-
-      // Format Waktu: "10:00 WIB"
-      jadwalWaktu =
-        jadwalDate.toLocaleTimeString("id-ID", {
+        // Format Waktu: "14:00 - 15:00 WIB"
+        const startTime = jadwalDate.toLocaleTimeString("id-ID", {
           hour: "2-digit",
           minute: "2-digit",
           hour12: false,
-          timeZone: "Asia/Jakarta",
-        }) + " WIB";
+          timeZone: "UTC",
+        });
+        const endDate = new Date(jadwalDate.getTime() + 60 * 60 * 1000);
+        const endTime = endDate.toLocaleTimeString("id-ID", {
+          hour: "2-digit",
+          minute: "2-digit",
+          hour12: false,
+          timeZone: "UTC",
+        });
+        jadwalWaktu = `${startTime} - ${endTime} WIB`;
+      }
     }
     // Format nomor WhatsApp untuk link wa.me
     let whatsappNumber = appointment.whatsapp || "";
@@ -222,19 +233,30 @@ document.addEventListener("DOMContentLoaded", function () {
 
       if (app.jadwal) {
         const jadwalDate = new Date(app.jadwal);
-        jadwalTanggal = jadwalDate.toLocaleDateString("id-ID", {
-          weekday: "long",
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-          timeZone: "Asia/Jakarta",
-        });
-        jadwalWaktu = jadwalDate.toLocaleTimeString("id-ID", {
-          hour: "2-digit",
-          minute: "2-digit",
-          hour12: false,
-          timeZone: "Asia/Jakarta",
-        });
+        if (!isNaN(jadwalDate.getTime())) {
+          jadwalTanggal = jadwalDate.toLocaleDateString("id-ID", {
+            weekday: "long",
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+            timeZone: "UTC",
+          });
+
+          const startTime = jadwalDate.toLocaleTimeString("id-ID", {
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: false,
+            timeZone: "UTC",
+          });
+          const endDate = new Date(jadwalDate.getTime() + 60 * 60 * 1000);
+          const endTime = endDate.toLocaleTimeString("id-ID", {
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: false,
+            timeZone: "UTC",
+          });
+          jadwalWaktu = `${startTime} - ${endTime}`;
+        }
       }
 
       return {

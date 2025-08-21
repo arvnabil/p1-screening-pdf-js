@@ -82,7 +82,7 @@ document.addEventListener("DOMContentLoaded", function () {
       consultationDateInput.focus();
       return;
     }
-    if (consultationTimeInput.value.trim() === "") {
+    if (consultationTimeInput.value === "") {
       showValidationToast("Waktu konsultasi tidak boleh kosong.");
       consultationTimeInput.focus();
       return;
@@ -90,16 +90,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const tanggalValue = consultationDateInput.value;
     const waktuValue = consultationTimeInput.value;
-
-    // Validasi rentang waktu
-    if (waktuValue < "10:00" || waktuValue > "22:00") {
-      showValidationToast(
-        "Waktu konsultasi hanya tersedia pukul 10:00 dan 22:00 WIB."
-      );
-      consultationTimeInput.focus();
-      return;
-    }
-
     const nama = namaInput.value;
     const email = emailInput.value;
     const whatsapp = document.getElementById("whatsapp").value;
@@ -107,6 +97,8 @@ document.addEventListener("DOMContentLoaded", function () {
       "summary-profesional"
     ).textContent;
     const tujuanText = tujuanSelect.options[tujuanSelect.selectedIndex].text;
+    const waktuText =
+      consultationTimeInput.options[consultationTimeInput.selectedIndex].text;
     const biaya = document.getElementById("summary-biaya").textContent;
     // Format the date for display on the receipt, avoiding timezone shifts
     const dateParts = tanggalValue.split("-");
@@ -122,7 +114,7 @@ document.addEventListener("DOMContentLoaded", function () {
       timeZone: "UTC",
     };
     const tanggalFormatted = displayDate.toLocaleDateString("id-ID", options);
-    const jadwalLengkap = `${tanggalFormatted}, pukul ${waktuValue} WIB`;
+    const jadwalLengkap = `${tanggalFormatted}, pukul ${waktuText} WIB`;
 
     // Data yang akan dikirim ke Supabase
     const appointmentData = {
@@ -265,6 +257,8 @@ document.addEventListener("DOMContentLoaded", function () {
   function updateSummaryTanggal() {
     const tanggalValue = consultationDateInput.value;
     const waktuValue = consultationTimeInput.value;
+    const waktuText =
+      consultationTimeInput.options[consultationTimeInput.selectedIndex].text;
 
     if (!tanggalValue) {
       summaryTanggal.textContent = "Belum dipilih";
@@ -288,7 +282,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const tanggalFormatted = displayDate.toLocaleDateString("id-ID", options);
 
     summaryTanggal.textContent = `${tanggalFormatted}, ${
-      waktuValue || "--:--"
+      waktuValue ? waktuText : "--:--"
     }`;
   }
 
