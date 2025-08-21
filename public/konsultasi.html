@@ -34,7 +34,6 @@
             <li class="nav-item">
               <a class="nav-link" href="index.html">Beranda</a>
             </li>
-            <li class="nav-item"><a class="nav-link" href="#">Edukasi</a></li>
             <li class="nav-item">
               <a class="nav-link" href="screening.html">Screening</a>
             </li>
@@ -49,7 +48,6 @@
             <li class="nav-item">
               <a class="nav-link" href="penyedia.html">Penyedia</a>
             </li>
-            <li class="nav-item"><a class="nav-link" href="#">SOS</a></li>
             <li class="nav-item">
               <a class="nav-link" href="login.html" title="Admin Login">
                 <i class="bi bi-box-arrow-in-right fs-5"></i>
@@ -457,6 +455,34 @@
                     <option value="lainnya">Lainnya</option>
                   </select>
                 </div>
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label for="consultationDate" class="form-label"
+                      >Tanggal Konsultasi</label
+                    >
+                    <input
+                      type="date"
+                      class="form-control"
+                      id="consultationDate"
+                    />
+                    <div class="form-text">Jadwal tersedia Senin - Sabtu.</div>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label for="consultationTime" class="form-label"
+                      >Waktu Konsultasi</label
+                    >
+                    <input
+                      type="time"
+                      class="form-control"
+                      id="consultationTime"
+                      min="10:00"
+                      max="22:00"
+                    />
+                    <div class="form-text">
+                      Jadwal tersedia pukul 10:00 - 22:00.
+                    </div>
+                  </div>
+                </div>
               </form>
 
               <div class="alert alert-light mt-4" role="alert">
@@ -492,7 +518,8 @@
                 </li>
                 <li class="mb-2"><strong>Metode:</strong> Online (Video)</li>
                 <li class="mb-2">
-                  <strong>Tanggal:</strong> Rabu, 12 - 19:00 WIB
+                  <strong>Tanggal:</strong>
+                  <span id="summary-tanggal">Belum dipilih</span>
                 </li>
                 <li class="mb-2">
                   <strong>Durasi:</strong>
@@ -575,6 +602,10 @@
                   <strong id="receipt-profesional"></strong>
                 </li>
                 <li class="list-group-item d-flex justify-content-between">
+                  <span>Jadwal:</span>
+                  <strong id="receipt-jadwal"></strong>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
                   <span>Tujuan Sesi:</span>
                   <strong id="receipt-tujuan"></strong>
                 </li>
@@ -592,6 +623,34 @@
             </div>
           </div>
         </div>
+      </div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div
+      class="toast-container position-fixed top-0 end-0 p-3"
+      style="z-index: 1100"
+    >
+      <div
+        id="validationToast"
+        class="toast"
+        role="alert"
+        aria-live="assertive"
+        aria-atomic="true"
+      >
+        <div class="toast-header bg-danger text-white">
+          <strong class="me-auto"
+            ><i class="bi bi-exclamation-circle-fill me-2"></i>Validasi
+            Gagal</strong
+          >
+          <button
+            type="button"
+            class="btn-close btn-close-white"
+            data-bs-dismiss="toast"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="toast-body"></div>
       </div>
     </div>
 
@@ -661,6 +720,30 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
     <!-- Custom Script -->
     <script src="js/konsultasi.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const dateInput = document.getElementById("consultationDate");
+        if (dateInput) {
+          // Set min date to today to prevent selecting past dates
+          const today = new Date().toISOString().split("T")[0];
+          dateInput.setAttribute("min", today);
+
+          dateInput.addEventListener("input", function (e) {
+            const selectedDate = new Date(e.target.value);
+            // getUTCDay() returns 0 for Sunday. We disable Sundays.
+            if (selectedDate.getUTCDay() === 0) {
+              const toastEl = document.getElementById("validationToast");
+              const toastBody = toastEl.querySelector(".toast-body");
+              toastBody.textContent =
+                "Jadwal konsultasi tidak tersedia di hari Minggu. Silakan pilih hari lain (Senin-Sabtu).";
+              const toast = new bootstrap.Toast(toastEl);
+              toast.show();
+              e.target.value = "";
+            }
+          });
+        }
+      });
+    </script>
     <!-- Bootstrap Icons -->
     <link
       rel="stylesheet"

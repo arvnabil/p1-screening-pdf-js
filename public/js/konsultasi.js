@@ -17,6 +17,15 @@ document.addEventListener("DOMContentLoaded", function () {
   );
   const delay = (ms) => new Promise((res) => setTimeout(res, ms));
 
+  // Inisialisasi Toast untuk notifikasi validasi
+  const validationToastEl = document.getElementById("validationToast");
+  const validationToast = new bootstrap.Toast(validationToastEl);
+
+  function showValidationToast(message) {
+    validationToastEl.querySelector(".toast-body").textContent = message;
+    validationToast.show();
+  }
+
   function showConfirmationForm(nama, tarif, durasi) {
     if (konsultanListSection && konfirmasiSection) {
       konsultanListSection.style.display = "none";
@@ -48,26 +57,46 @@ document.addEventListener("DOMContentLoaded", function () {
    */
   /*******  5151be4d-4a70-43e6-be07-3b1a521e7424  *******/
   async function showReceipt() {
-    // Tampilkan modal pemrosesan
-    processingModal.show();
-    const processingStartTime = Date.now(); // Catat waktu mulai
-
     const namaInput = document.getElementById("fullName");
     const emailInput = document.getElementById("email");
     const tujuanSelect = document.getElementById("tujuan");
+    const consultationDateInput = document.getElementById("consultationDate");
+    const consultationTimeInput = document.getElementById("consultationTime");
     if (namaInput.value.trim() === "") {
-      alert("Nama lengkap tidak boleh kosong.");
+      showValidationToast("Nama lengkap tidak boleh kosong.");
       namaInput.focus();
       return;
     }
     if (emailInput.value.trim() === "") {
-      alert("Email tidak boleh kosong.");
+      showValidationToast("Email tidak boleh kosong.");
       emailInput.focus();
       return;
     }
     if (tujuanSelect.value === "") {
-      alert("Silakan pilih tujuan sesi.");
+      showValidationToast("Silakan pilih tujuan sesi.");
       tujuanSelect.focus();
+      return;
+    }
+    if (consultationDateInput.value.trim() === "") {
+      showValidationToast("Tanggal konsultasi tidak boleh kosong.");
+      consultationDateInput.focus();
+      return;
+    }
+    if (consultationTimeInput.value.trim() === "") {
+      showValidationToast("Waktu konsultasi tidak boleh kosong.");
+      consultationTimeInput.focus();
+      return;
+    }
+
+    const tanggalValue = consultationDateInput.value;
+    const waktuValue = consultationTimeInput.value;
+
+    // Validasi rentang waktu
+    if (waktuValue < "10:00" || waktuValue > "22:00") {
+      showValidationToast(
+        "Waktu konsultasi hanya tersedia pukul 10:00 dan 22:00 WIB."
+      );
+      consultationTimeInput.focus();
       return;
     }
 
@@ -79,6 +108,21 @@ document.addEventListener("DOMContentLoaded", function () {
     ).textContent;
     const tujuanText = tujuanSelect.options[tujuanSelect.selectedIndex].text;
     const biaya = document.getElementById("summary-biaya").textContent;
+    // Format the date for display on the receipt, avoiding timezone shifts
+    const dateParts = tanggalValue.split("-");
+    const year = parseInt(dateParts[0], 10);
+    const month = parseInt(dateParts[1], 10) - 1;
+    const day = parseInt(dateParts[2], 10);
+    const displayDate = new Date(Date.UTC(year, month, day));
+    const options = {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      timeZone: "UTC",
+    };
+    const tanggalFormatted = displayDate.toLocaleDateString("id-ID", options);
+    const jadwalLengkap = `${tanggalFormatted}, pukul ${waktuValue} WIB`;
 
     // Data yang akan dikirim ke Supabase
     const appointmentData = {
@@ -88,9 +132,14 @@ document.addEventListener("DOMContentLoaded", function () {
       profesional: profesional,
       tujuan_sesi: tujuanText,
       biaya: "Rp " + biaya,
+      jadwal: `${tanggalValue} ${waktuValue}`,
     };
 
     try {
+      // Tampilkan modal pemrosesan HANYA SETELAH semua validasi berhasil
+      processingModal.show();
+      const processingStartTime = Date.now(); // Catat waktu mulai
+
       const response = await fetch("/api/janji-temu", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -131,6 +180,7 @@ document.addEventListener("DOMContentLoaded", function () {
       document.getElementById("receipt-profesional").textContent = profesional;
       document.getElementById("receipt-biaya").textContent = "Rp " + biaya;
       document.getElementById("receipt-tujuan").textContent = tujuanText;
+      document.getElementById("receipt-jadwal").textContent = jadwalLengkap;
 
       if (konfirmasiSection && receiptSection) {
         konfirmasiSection.style.display = "none";
@@ -174,6 +224,9 @@ document.addEventListener("DOMContentLoaded", function () {
   const paymentMethods = document.getElementById("payment-methods");
   const tujuanSelect = document.getElementById("tujuan");
   const summaryTujuan = document.getElementById("summary-tujuan");
+  const consultationDateInput = document.getElementById("consultationDate");
+  const consultationTimeInput = document.getElementById("consultationTime");
+  const summaryTanggal = document.getElementById("summary-tanggal");
 
   if (termsCheck && submitButton) {
     termsCheck.addEventListener("change", function () {
@@ -207,6 +260,41 @@ document.addEventListener("DOMContentLoaded", function () {
         ? selectedOption.text
         : "Belum dipilih";
     });
+  }
+
+  function updateSummaryTanggal() {
+    const tanggalValue = consultationDateInput.value;
+    const waktuValue = consultationTimeInput.value;
+
+    if (!tanggalValue) {
+      summaryTanggal.textContent = "Belum dipilih";
+      return;
+    }
+
+    // To prevent timezone issues, we treat the date as UTC
+    const dateParts = tanggalValue.split("-");
+    const year = parseInt(dateParts[0], 10);
+    const month = parseInt(dateParts[1], 10) - 1;
+    const day = parseInt(dateParts[2], 10);
+    const displayDate = new Date(Date.UTC(year, month, day));
+
+    const options = {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      timeZone: "UTC",
+    };
+    const tanggalFormatted = displayDate.toLocaleDateString("id-ID", options);
+
+    summaryTanggal.textContent = `${tanggalFormatted}, ${
+      waktuValue || "--:--"
+    }`;
+  }
+
+  if (consultationDateInput && consultationTimeInput && summaryTanggal) {
+    consultationDateInput.addEventListener("input", updateSummaryTanggal);
+    consultationTimeInput.addEventListener("input", updateSummaryTanggal);
   }
 
   // --- DYNAMIC FILTER LOGIC ---

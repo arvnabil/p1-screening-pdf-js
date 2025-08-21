@@ -26,17 +26,31 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function createAppointmentRow(appointment, index) {
-    const formattedDate = new Date(appointment.created_at).toLocaleDateString(
-      "id-ID",
-      {
-        day: "numeric",
-        month: "long",
-        year: "numeric",
-        hour: "2-digit",
-        minute: "2-digit",
-      }
-    );
+    // Menggunakan data 'jadwal' untuk tanggal dan waktu konsultasi
+    let jadwalTanggal = "Belum diatur";
+    let jadwalWaktu = "-";
 
+    if (appointment.jadwal) {
+      const jadwalDate = new Date(appointment.jadwal);
+
+      // Format Tanggal: "Sabtu, 21 Agustus 2025"
+      jadwalTanggal = jadwalDate.toLocaleDateString("id-ID", {
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+        timeZone: "Asia/Jakarta", // Pastikan timezone konsisten
+      });
+
+      // Format Waktu: "10:00 WIB"
+      jadwalWaktu =
+        jadwalDate.toLocaleTimeString("id-ID", {
+          hour: "2-digit",
+          minute: "2-digit",
+          hour12: false,
+          timeZone: "Asia/Jakarta",
+        }) + " WIB";
+    }
     // Format nomor WhatsApp untuk link wa.me
     let whatsappNumber = appointment.whatsapp || "";
     if (whatsappNumber.startsWith("0")) {
@@ -53,7 +67,8 @@ document.addEventListener("DOMContentLoaded", function () {
         <td>${appointment.nama_lengkap}</td>
         <td>${appointment.profesional}</td>
         <td>${appointment.tujuan_sesi}</td>
-        <td>${formattedDate}</td>
+        <td>${jadwalTanggal}</td>
+        <td>${jadwalWaktu}</td>
         <td>
           <a href="${whatsappLink}" target="_blank" class="btn btn-success btn-sm" title="Hubungi via WhatsApp" ${whatsappButtonDisabled}>
             <i class="bi bi-whatsapp"></i>
@@ -145,7 +160,7 @@ document.addEventListener("DOMContentLoaded", function () {
       // Jika tidak ada data (baik karena filter atau pencarian), tampilkan pesan ini.
       tbody.innerHTML = `
         <tr>
-          <td colspan="6" class="text-center text-muted py-4">
+          <td colspan="7" class="text-center text-muted py-4">
             Tidak ada janji temu yang cocok dengan kriteria Anda.
           </td>
         </tr>
@@ -165,15 +180,41 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // 1. Siapkan data dengan header yang diinginkan
-    const dataForExport = currentlyDisplayedAppointments.map((app) => ({
-      "Nama Pasien": app.nama_lengkap,
-      Profesional: app.profesional,
-      "Tujuan Sesi": app.tujuan_sesi,
-      Email: app.email,
-      WhatsApp: app.whatsapp,
-      Biaya: app.biaya,
-      "Tanggal Dibuat": new Date(app.created_at).toLocaleString("id-ID"),
-    }));
+    const dataForExport = currentlyDisplayedAppointments.map((app) => {
+      let jadwalTanggal = "Belum diatur";
+      let jadwalWaktu = "-";
+
+      if (app.jadwal) {
+        const jadwalDate = new Date(app.jadwal);
+        jadwalTanggal = jadwalDate.toLocaleDateString("id-ID", {
+          weekday: "long",
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+          timeZone: "Asia/Jakarta",
+        });
+        jadwalWaktu = jadwalDate.toLocaleTimeString("id-ID", {
+          hour: "2-digit",
+          minute: "2-digit",
+          hour12: false,
+          timeZone: "Asia/Jakarta",
+        });
+      }
+
+      return {
+        "Nama Pasien": app.nama_lengkap,
+        Profesional: app.profesional,
+        "Tujuan Sesi": app.tujuan_sesi,
+        "Tanggal Konsultasi": jadwalTanggal,
+        "Waktu Konsultasi": jadwalWaktu,
+        Email: app.email,
+        WhatsApp: app.whatsapp,
+        Biaya: app.biaya,
+        "Tanggal Dibuat (Sistem)": new Date(app.created_at).toLocaleString(
+          "id-ID"
+        ),
+      };
+    });
 
     // 2. Buat worksheet dari data JSON
     const worksheet = XLSX.utils.json_to_sheet(dataForExport);
@@ -184,13 +225,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // 4. Atur lebar kolom (opsional, tapi membuat tampilan lebih baik)
     worksheet["!cols"] = [
-      { wch: 25 },
-      { wch: 25 },
-      { wch: 30 },
-      { wch: 25 },
-      { wch: 15 },
-      { wch: 15 },
-      { wch: 20 },
+      { wch: 25 }, // Nama Pasien
+      { wch: 25 }, // Profesional
+      { wch: 30 }, // Tujuan Sesi
+      { wch: 30 }, // Tanggal Konsultasi
+      { wch: 20 }, // Waktu Konsultasi
+      { wch: 25 }, // Email
+      { wch: 15 }, // WhatsApp
+      { wch: 15 }, // Biaya
+      { wch: 25 }, // Tanggal Dibuat (Sistem)
     ];
 
     // 5. Tulis file dan trigger download

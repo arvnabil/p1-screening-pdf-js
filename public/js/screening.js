@@ -209,7 +209,7 @@ document.addEventListener("DOMContentLoaded", function () {
               <button class="btn btn-info mb-2 w-100 fw-bold p-2" style="color: #fff" onclick="window.location.href='penyedia.html'">
                 Penyedia Layanan Kesehatan Mental Terdekat
               </button>
-              <button class="btn btn-danger mb-2 w-100 fw-bold p-2">
+              <button class="btn btn-danger mb-2 w-100 fw-bold p-2" onclick="window.location.href='tel:119'">
                 Telpon Darurat 119 ext 8
               </button>
               <button class="btn btn-secondary mb-2 w-100 fw-bold p-2" id="download-pdf-btn">
