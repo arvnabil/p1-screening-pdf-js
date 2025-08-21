@@ -16,6 +16,21 @@ document.addEventListener("DOMContentLoaded", function () {
   let allAppointments = []; // Store data for export
   let uniqueProfesionals = new Set();
   let currentlyDisplayedAppointments = []; // Store currently visible data
+  let appointmentIdToDelete = null; // Store ID for modal confirmation
+
+  // Inisialisasi Modal dan Toast Bootstrap
+  const deleteConfirmModalEl = document.getElementById("deleteConfirmModal");
+  let deleteConfirmModal = null;
+  if (deleteConfirmModalEl) {
+    deleteConfirmModal = new bootstrap.Modal(deleteConfirmModalEl);
+  }
+  const confirmDeleteBtn = document.getElementById("confirm-delete-btn");
+
+  const successToastEl = document.getElementById("successToast");
+  let successToast = null;
+  if (successToastEl) {
+    successToast = new bootstrap.Toast(successToastEl, { delay: 3000 });
+  }
 
   // Logout logic
   if (logoutBtn) {
@@ -70,10 +85,10 @@ document.addEventListener("DOMContentLoaded", function () {
         <td>${jadwalTanggal}</td>
         <td>${jadwalWaktu}</td>
         <td>
-          <a href="${whatsappLink}" target="_blank" class="btn btn-success btn-sm" title="Hubungi via WhatsApp" ${whatsappButtonDisabled}>
+          <a href="${whatsappLink}" target="_blank" class="btn btn-success btn-sm mt-2" title="Hubungi via WhatsApp" ${whatsappButtonDisabled}>
             <i class="bi bi-whatsapp"></i>
           </a>
-          <button class="btn btn-danger btn-sm btn-delete" data-id="${
+          <button class="btn btn-danger btn-sm btn-delete mt-2" data-id="${
             appointment.id
           }" title="Hapus Janji Temu">
             <i class="bi bi-trash"></i>
@@ -85,10 +100,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Fungsi untuk menangani penghapusan janji temu
   async function deleteAppointment(id) {
-    if (!confirm("Apakah Anda yakin ingin menghapus janji temu ini?")) {
-      return;
-    }
-
     try {
       const response = await fetch(`/api/janji-temu/${id}`, {
         method: "DELETE",
@@ -105,10 +116,27 @@ document.addEventListener("DOMContentLoaded", function () {
       const rowToRemove = document.getElementById(`row-${id}`);
       if (rowToRemove) {
         rowToRemove.remove();
+        if (deleteConfirmModal) {
+          deleteConfirmModal.hide(); // Sembunyikan modal setelah berhasil
+        }
+        if (successToast) {
+          successToast.show(); // Tampilkan notifikasi sukses
+        }
       }
     } catch (error) {
       alert(`Terjadi kesalahan: ${error.message}`);
       console.error("Error deleting appointment:", error);
+      if (deleteConfirmModal) {
+        deleteConfirmModal.hide();
+      }
+    }
+  }
+
+  // Fungsi untuk membuka modal konfirmasi
+  function confirmDelete(id) {
+    appointmentIdToDelete = id;
+    if (deleteConfirmModal) {
+      deleteConfirmModal.show();
     }
   }
 
@@ -116,10 +144,18 @@ document.addEventListener("DOMContentLoaded", function () {
   tbody.addEventListener("click", function (event) {
     const deleteButton = event.target.closest(".btn-delete");
     if (deleteButton) {
-      const appointmentId = deleteButton.dataset.id;
-      deleteAppointment(appointmentId);
+      confirmDelete(deleteButton.dataset.id);
     }
   });
+
+  // Event listener untuk tombol konfirmasi di dalam modal
+  if (confirmDeleteBtn) {
+    confirmDeleteBtn.addEventListener("click", () => {
+      if (appointmentIdToDelete) {
+        deleteAppointment(appointmentIdToDelete);
+      }
+    });
+  }
 
   // Fungsi untuk mengisi dropdown filter profesional
   function populateProfesionalFilter() {
