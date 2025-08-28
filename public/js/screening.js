@@ -161,15 +161,24 @@ document.addEventListener("DOMContentLoaded", function () {
     // Determine recommendation based on score. A common threshold for SRQ-20 is 8.
     let recommendationText = "";
     let alertClass = "";
+    let saranAwal = "";
     if (yesCount >= 8) {
       recommendationText = "Anda butuh evaluasi psikiatrik lebih lanjut";
       alertClass = "alert-warning";
+      saranAwal = `<strong>Saran awal:</strong> <br/>
+                    Anda dapat membuat janji konsultasi secara online dengan tenaga kesehatan jiwa profesional 
+                    yang kami sediakan dengan klik tombol <strong>"Buat Janji Konsultasi"</strong> di samping. Untuk opsi konsultasi secara offline, kami juga 
+                    menyediakan daftar penyedia layanan kesehatan mental yang terdekat dengan lokasi Anda. <br/>
+                    Apabila Anda masih ragu, maka Anda dapat <strong>Gabung Komunitas</strong> untuk berbincang dengan teman yang dapat saling mendukung. Namun apabila Anda 
+                    sudah tidak mampu menahan perasaan dan merasa ingin menyakiti diri sendiri atau orang lain, Anda dapat segera menghubungi <strong>119 ext. 8</strong>.`;
     } else {
       recommendationText =
         "Skor Anda tidak mengindikasikan adanya distres psikologis yang signifikan saat ini. Tetap jaga kesehatan mental Anda.";
       alertClass = "alert-success";
+      saranAwal = `<strong>Saran awal:</strong> coba latihan pernapasan 4-7-8,
+                    jurnal emosi, dan kelola prioritas. Pertimbangkan konsultasi
+                    bila keluhan menetap &gt;2 minggu.`;
     }
-
     // The new result layout provided by the user
     const resultLayoutHTML = `
     <div class="row">
@@ -185,12 +194,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     ${recommendationText}
                   </div>
                   <p>
-                    <strong>Saran awal:</strong> <br/>
-                    Anda dapat membuat janji konsultasi secara online dengan tenaga kesehatan jiwa profesional 
-                    yang kami sediakan dengan klik tombol <strong>"Buat Janji Konsultasi"</strong> di samping. Untuk opsi konsultasi secara offline, kami juga 
-                    menyediakan daftar penyedia layanan kesehatan mental yang terdekat dengan lokasi Anda. <br/>
-                    Apabila Anda masih ragu, maka Anda dapat <strong>Gabung Komunitas</strong> untuk berbincang dengan teman yang dapat saling mendukung. Namun apabila Anda 
-                    sudah tidak mampu menahan perasaan dan merasa ingin menyakiti diri sendiri atau orang lain, Anda dapat segera menghubungi <strong>119 ext. 8</strong>.
+                    ${saranAwal}
                   </p>
                 </div>
               </div>
